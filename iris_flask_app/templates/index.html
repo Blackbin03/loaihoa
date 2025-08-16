@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dự đoán Iris Flower</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="card shadow p-4 rounded-3">
+            <h2 class="text-center text-primary mb-4">🌸 Dự đoán Loài Hoa Iris</h2>
+            <form method="POST">
+                <div class="row mb-3">
+                    <div class="col">
+                        <label>Sepal Length</label>
+                        <input type="number" step="0.1" name="sepal_length" class="form-control" required>
+                    </div>
+                    <div class="col">
+                        <label>Sepal Width</label>
+                        <input type="number" step="0.1" name="sepal_width" class="form-control" required>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <label>Petal Length</label>
+                        <input type="number" step="0.1" name="petal_length" class="form-control" required>
+                    </div>
+                    <div class="col">
+                        <label>Petal Width</label>
+                        <input type="number" step="0.1" name="petal_width" class="form-control" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success w-100">Dự đoán</button>
+            </form>
+
+            {% if prediction %}
+                <div class="alert alert-info text-center mt-4">
+                    <h4>Kết quả: <b>{{ prediction }}</b></h4>
+                </div>
+            {% endif %}
+
+            {% if probabilities %}
+                <h5 class="mt-4">🔎 Xác suất dự đoán:</h5>
+                <table class="table table-bordered text-center">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Loài</th>
+                            <th>Xác suất (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for label, prob in probabilities.items() %}
+                        <tr>
+                            <td>{{ label }}</td>
+                            <td>{{ '%.2f'|format(prob*100) }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
